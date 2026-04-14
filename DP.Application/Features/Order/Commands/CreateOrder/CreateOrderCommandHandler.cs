@@ -1,16 +1,19 @@
-﻿using DP.Application.Interfaces;
+﻿using DP.Application.Features.Orders.Commands.CreateOrder;
+using DP.Application.Interfaces;
 using DP.Domain.Entities;
 using MediatR;
-
-namespace DP.Application.Features.Orders.Commands.CreateOrder;
 
 public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Guid>
 {
     private readonly IOrderRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateOrderCommandHandler(IOrderRepository repository)
+    public CreateOrderCommandHandler(
+        IOrderRepository repository,
+        IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -23,6 +26,8 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Gui
         }
 
         await _repository.AddAsync(order, cancellationToken);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return order.Id;
     }
