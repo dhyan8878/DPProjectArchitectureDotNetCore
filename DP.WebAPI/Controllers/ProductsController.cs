@@ -1,4 +1,6 @@
 ﻿using DP.Application.Features.Products.Commands.CreateProduct;
+using DP.Application.Features.Products.Commands.DeleteProduct;
+using DP.Application.Features.Products.Commands.UpdateProduct;
 using DP.Application.Features.Products.Queries.GetProducts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,5 +30,21 @@ public class ProductsController : ControllerBase
     {
         var result = await _mediator.Send(query);
         return Ok(result);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, UpdateProductCommand command)
+    {
+        if (id != command.Id) return BadRequest();
+
+        await _mediator.Send(command);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _mediator.Send(new DeleteProductCommand { Id = id });
+        return NoContent();
     }
 }

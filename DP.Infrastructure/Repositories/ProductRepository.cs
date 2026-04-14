@@ -55,4 +55,20 @@ public class ProductRepository : IProductRepository
 
         return (items, totalCount);
     }
+    public async Task<Product?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Products.FindAsync(new object[] { id }, cancellationToken);
+    }
+
+    public async Task UpdateAsync(Product product, CancellationToken cancellationToken)
+    {
+        _context.Products.Update(product);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task DeleteAsync(Product product, CancellationToken cancellationToken)
+    {
+        _context.Products.Remove(product);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }

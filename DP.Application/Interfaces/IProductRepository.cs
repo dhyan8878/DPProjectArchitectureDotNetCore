@@ -13,4 +13,7 @@ public interface IProductRepository
         string? sortBy,
         bool isDescending,
         CancellationToken cancellationToken);
+    Task<Product?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task UpdateAsync(Product product, CancellationToken cancellationToken);
+    Task DeleteAsync(Product product, CancellationToken cancellationToken);
 }
