@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using DP.Application.Interfaces;
 using DP.Infrastructure.Services;
+using StackExchange.Redis;
 
 namespace DP.Infrastructure;
 
@@ -29,7 +30,11 @@ public static class DependencyInjection
         services.AddScoped<IPasswordHasher, PasswordHasher>();
 
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-        
+
+        services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("localhost:6379"));
+
+        services.AddScoped<ICacheService, RedisCacheService>();
+
         return services;
     }
 }
