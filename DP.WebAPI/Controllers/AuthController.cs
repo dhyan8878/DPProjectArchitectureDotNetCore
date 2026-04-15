@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DP.WebAPI.Controllers;
 
+using DP.Application.Features.Auth.Commands.Login;
+using DP.Application.Features.Auth.Commands.RefreshTokens;
 using DP.Application.Features.Auth.Commands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +32,13 @@ public class AuthController : ControllerBase
     {
         var token = await _mediator.Send(command);
         return Ok(new { Token = token });
+    }
+
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh(RefreshTokenCommand command)
+    {
+        var token = await _mediator.Send(command);
+        return Ok(new { AccessToken = token });
     }
 }
 

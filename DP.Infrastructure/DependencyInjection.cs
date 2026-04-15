@@ -28,6 +28,8 @@ public static class DependencyInjection
         
         services.AddScoped<IPasswordHasher, PasswordHasher>();
 
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        
         return services;
     }
 }
