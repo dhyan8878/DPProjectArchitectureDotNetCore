@@ -4,6 +4,8 @@ using DP.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using DP.Application.Interfaces;
+using DP.Infrastructure.Services;
 
 namespace DP.Infrastructure;
 
@@ -19,6 +21,12 @@ public static class DependencyInjection
         services.AddScoped<IOrderRepository, OrderRepository>();
         
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+        
+        services.AddScoped<IUserRepository, UserRepository>();
+        
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
 
         return services;
     }

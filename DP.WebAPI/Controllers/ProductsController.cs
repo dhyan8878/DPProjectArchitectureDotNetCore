@@ -3,10 +3,12 @@ using DP.Application.Features.Products.Commands.DeleteProduct;
 using DP.Application.Features.Products.Commands.UpdateProduct;
 using DP.Application.Features.Products.Queries.GetProducts;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DP.WebAPI.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
@@ -18,6 +20,7 @@ public class ProductsController : ControllerBase
         _mediator = mediator;
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create(CreateProductCommand command)
     {
