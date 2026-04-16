@@ -29,6 +29,13 @@ services:
     ports:
       - "6379:6379"
     restart: always
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: dp_redisinsight
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
 
 volumes:
   postgres_data:
