@@ -31,7 +31,8 @@ public static class DependencyInjection
 
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
-        services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("localhost:6379"));
+        var redisConnection = configuration["Redis:Connection"];
+        services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnection!));
 
         services.AddScoped<ICacheService, RedisCacheService>();
 

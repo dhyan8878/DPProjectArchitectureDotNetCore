@@ -20,7 +20,6 @@ public class ProductsController : ControllerBase
         _mediator = mediator;
     }
 
-    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create(CreateProductCommand command)
     {
