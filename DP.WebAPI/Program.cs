@@ -9,8 +9,10 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔥 Serilog
+// Serilog
 Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()   
+    .Enrich.FromLogContext()
     .WriteTo.Console()
     .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
